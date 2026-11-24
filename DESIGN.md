@@ -24,13 +24,13 @@ Una sala de ensayo de noche: madera oscura, el atril iluminado por una lámpara 
 | `--radius` | `6px` | radio único |
 
 ## Tipografía (autoalojada con @fontsource)
-- **Fraunces Variable** (vertical, nunca cursiva): títulos de pieza y de página. Opsz alto, peso 500–600.
+- **Gloock** (serif de alto contraste, aire de cartel de teatro de ópera; nunca cursiva): títulos de pieza y de página. Fraunces se descartó porque el detector de Impeccable la marca como tipografía sobreusada.
 - **Instrument Sans Variable**: interfaz y texto.
 - **IBM Plex Mono**: solo datos de medición (notas `D3–G4`, minutos, fechas). Cifras tabulares.
 - Escala: 0.8125 / 0.9375 / 1.0625 / 1.375 / 2 / 2.75 rem.
 
 ## Estructura
-- Listado de piezas como **filas** (no rejilla de tarjetas): título en Fraunces, compositor · obra debajo, a la derecha estado y tesitura.
+- Listado de piezas como **filas** (no rejilla de tarjetas): título en Gloock, compositor · obra debajo, a la derecha estado y tesitura.
 - **Elemento propio: la regla de tesitura.** Cada pieza muestra su ámbito como un tramo de latón sobre una pauta de C2–C6 con marcas en cada Do. Es dato real, no adorno.
 - Filtro de estado como control segmentado; búsqueda por título o compositor.
 - Detalle de pieza: datos a la izquierda, registro de ensayos a la derecha (apilado en móvil).
