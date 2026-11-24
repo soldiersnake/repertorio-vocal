@@ -14,7 +14,7 @@ Las escribe y mantiene el agente **Testing**; las cumple el agente **Develop**. 
 
 - **D-10 [bloqueante]** Ninguna clave en el repositorio. Solo se leen `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` desde `process.env`. Prohibido usar `service_role` / `sb_secret`.
 - **D-11 [bloqueante]** Toda tabla tiene RLS activado con políticas por `auth.uid()`. Cambios de esquema solo en migraciones nuevas.
-- **D-12 [bloqueante]** Toda Server Action: (a) obtiene el usuario con `supabase.auth.getUser()` y corta si no hay sesión, (b) valida la entrada con el esquema zod de `src/lib/validation.ts`, (c) comprueba `error` de Supabase y devuelve un mensaje legible, nunca el error crudo.
+- **D-12 [bloqueante]** Toda Server Action: (a) obtiene el usuario con `supabase.auth.getUser()` y corta si no hay sesión, (b) valida la entrada con el esquema zod de `src/lib/validation.ts`, (c) comprueba `error` de Supabase y devuelve un mensaje legible, nunca el error crudo. **Excepción a (a):** las acciones que *crean* la sesión (`signIn`, `signUp`) no exigen sesión previa; sí cumplen (b) y (c). Cualquier otra acción, incluida `signOut`, cumple (a).
 - **D-13 [bloqueante]** Las rutas privadas (`/repertorio/**`) redirigen a `/login` sin sesión (middleware + comprobación en servidor).
 - **D-14** No se usa `dangerouslySetInnerHTML`. Los textos del usuario se renderizan como texto.
 
