@@ -6,7 +6,10 @@ import {
   noteToMidi,
   rangeSpan,
   rangeToPercent,
+  RULER_MARKS,
   statusLabel,
+  statusShortLabel,
+  tesituraLabel,
 } from "./music";
 
 describe("isNote", () => {
@@ -141,5 +144,32 @@ describe("statusLabel", () => {
     expect(statusLabel("por_aprender")).toBe("Por aprender");
     expect(statusLabel("en_estudio")).toBe("En estudio");
     expect(statusLabel("listo")).toBe("Listo para escenario");
+  });
+});
+
+describe("statusShortLabel", () => {
+  it("da la etiqueta corta de cada estado", () => {
+    expect(statusShortLabel("por_aprender")).toBe("Por aprender");
+    expect(statusShortLabel("en_estudio")).toBe("En estudio");
+    expect(statusShortLabel("listo")).toBe("Listo");
+  });
+});
+
+describe("RULER_MARKS", () => {
+  it("marca cada Do de C2 a C6", () => {
+    expect(RULER_MARKS).toEqual(["C2", "C3", "C4", "C5", "C6"]);
+  });
+});
+
+describe("tesituraLabel", () => {
+  it("describe la tesitura", () => {
+    expect(tesituraLabel("D3", "G4")).toBe("Tesitura D3 a G4");
+  });
+
+  it("devuelve null si falta una nota o el ámbito no es válido", () => {
+    expect(tesituraLabel(null, "G4")).toBeNull();
+    expect(tesituraLabel("D3", null)).toBeNull();
+    expect(tesituraLabel("G4", "D3")).toBeNull();
+    expect(tesituraLabel("H3", "G4")).toBeNull();
   });
 });

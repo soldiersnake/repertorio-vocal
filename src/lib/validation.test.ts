@@ -1,8 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   firstFieldErrors,
+  idSchema,
   loginSchema,
   pieceSchema,
+  readPieceValues,
   rehearsalSchema,
   signupSchema,
 } from "./validation";
@@ -217,5 +219,24 @@ describe("firstFieldErrors", () => {
       expect(Object.keys(errors).sort()).toEqual(["email", "password"]);
       expect(typeof errors.email).toBe("string");
     }
+  });
+});
+
+describe("idSchema", () => {
+  it("acepta un uuid y rechaza el resto con un mensaje legible", () => {
+    expect(idSchema.safeParse("6f1c2a3e-8b4d-4c5e-9f10-123456789abc").success).toBe(true);
+    const result = idSchema.safeParse("123");
+    expect(result.success).toBe(false);
+    if (!result.success) expect(result.error.issues[0].message).toMatch(/no es válido/);
+  });
+});
+
+describe("readPieceValues", () => {
+  it("devuelve solo los campos de pieza escritos como texto", () => {
+    const formData = new FormData();
+    formData.set("title", "Ombra mai fù");
+    formData.set("range_low", "D3");
+    formData.set("otro", "x");
+    expect(readPieceValues(formData)).toEqual({ title: "Ombra mai fù", range_low: "D3" });
   });
 });

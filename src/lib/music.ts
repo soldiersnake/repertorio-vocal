@@ -85,3 +85,23 @@ const STATUS_LABELS: Record<PieceStatus, string> = {
 export function statusLabel(status: PieceStatus): string {
   return STATUS_LABELS[status];
 }
+
+const STATUS_SHORT_LABELS: Record<PieceStatus, string> = {
+  por_aprender: "Por aprender",
+  en_estudio: "En estudio",
+  listo: "Listo",
+};
+
+/** Etiqueta corta del estado, para insignias y controles segmentados. */
+export function statusShortLabel(status: PieceStatus): string {
+  return STATUS_SHORT_LABELS[status];
+}
+
+/** Notas de la pauta de la regla de tesitura: cada Do de C2 a C6. */
+export const RULER_MARKS = ["C2", "C3", "C4", "C5", "C6"] as const;
+
+/** Texto accesible de una tesitura: "Tesitura D3 a G4" o `null` si falta o no es válida. */
+export function tesituraLabel(low: string | null, high: string | null): string | null {
+  if (!low || !high || !rangeToPercent(low, high)) return null;
+  return `Tesitura ${low} a ${high}`;
+}

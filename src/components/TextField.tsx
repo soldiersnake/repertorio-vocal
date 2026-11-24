@@ -7,10 +7,22 @@ type TextFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, "id" | "name">
   label: string;
   hint?: string;
   error?: string;
+  /** Marca visual de campo obligatorio (el `required` del input lo anuncia a lectores de pantalla). */
+  requiredMark?: boolean;
 };
 
 /** Campo de texto con etiqueta, ayuda y error enlazados por `aria-describedby`. */
-export function TextField({ id, name, ref, label, hint, error, className, ...inputProps }: TextFieldProps) {
+export function TextField({
+  id,
+  name,
+  ref,
+  label,
+  hint,
+  error,
+  requiredMark = false,
+  className,
+  ...inputProps
+}: TextFieldProps) {
   const hintId = hint ? `${id}-hint` : undefined;
   const errorId = error ? `${id}-error` : undefined;
   const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
@@ -19,6 +31,11 @@ export function TextField({ id, name, ref, label, hint, error, className, ...inp
     <div className="flex flex-col gap-1.5">
       <label htmlFor={id} className="text-small font-medium text-fg">
         {label}
+        {requiredMark ? (
+          <span aria-hidden className="ml-0.5 text-brass">
+            *
+          </span>
+        ) : null}
       </label>
       <input
         ref={ref}

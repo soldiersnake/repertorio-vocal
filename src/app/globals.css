@@ -90,8 +90,23 @@
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4,
+  h5,
+  h6 {
     text-wrap: balance;
+  }
+
+  /* Texto corrido: sin viudas al final de párrafo. */
+  p,
+  li,
+  dd,
+  dt,
+  label,
+  legend,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
   }
 
   ::selection {
@@ -156,4 +171,22 @@ code,
 kbd,
 time {
   font-variant-numeric: tabular-nums;
+}
+
+/* Regla de tesitura: el tramo crece desde su nota grave (único momento de movimiento). */
+@keyframes tesitura-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.tesitura-span {
+  transform-origin: left center;
+  animation: tesitura-grow 400ms var(--ease-out-expo) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tesitura-span {
+    animation: none;
+  }
 }

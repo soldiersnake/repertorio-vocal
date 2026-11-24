@@ -18,3 +18,22 @@ export function latestTodayIso(now: Date = new Date()): string {
 export function isNotFutureDate(iso: string, now: Date = new Date()): boolean {
   return iso <= latestTodayIso(now);
 }
+
+/** Primer día (`YYYY-MM-DD`, UTC) del mes del instante dado. */
+export function monthStartIso(now: Date = new Date()): string {
+  return `${toIsoDate(now).slice(0, 7)}-01`;
+}
+
+const DATE_FORMAT = new Intl.DateTimeFormat("es-ES", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+/** "2026-11-24" → "24 nov 2026". Devuelve la cadena tal cual si no es una fecha ISO válida. */
+export function formatDateEs(iso: string): string {
+  const date = new Date(`${iso}T00:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || Number.isNaN(date.getTime())) return iso;
+  return DATE_FORMAT.format(date).replace(/\./g, "");
+}

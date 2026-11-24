@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { compareNotes, NOTE_PATTERN } from "./music";
 import { isNotFutureDate } from "./dates";
-import { PIECE_STATUSES } from "./types";
+import { PIECE_FIELDS, PIECE_STATUSES, type PieceFormValues } from "./types";
 
 /** Convierte los vacíos de un formulario ("", "   ", null) en `null` y recorta espacios. */
 function blankToNull(value: unknown): unknown {
@@ -131,10 +131,25 @@ export const rehearsalSchema = z.object({
   note: optionalText(500, "Acorta la nota a 500 caracteres como máximo."),
 });
 
+/** Identificador de una fila (pieza o ensayo). */
+export const idSchema = z.uuid({
+  error: "El elemento no es válido. Vuelve a abrirlo desde el repertorio.",
+});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type SignupInput = z.infer<typeof signupSchema>;
 export type PieceInput = z.infer<typeof pieceSchema>;
 export type RehearsalInput = z.infer<typeof rehearsalSchema>;
+
+/** Lee del FormData los campos de pieza como texto, para devolverlos al formulario. */
+export function readPieceValues(formData: FormData): PieceFormValues {
+  const values: PieceFormValues = {};
+  for (const field of PIECE_FIELDS) {
+    const value = formData.get(field);
+    if (typeof value === "string") values[field] = value;
+  }
+  return values;
+}
 
 /** Primer mensaje de error de cada campo, listo para mostrar bajo el campo. */
 export function firstFieldErrors(error: z.ZodError): Record<string, string> {
