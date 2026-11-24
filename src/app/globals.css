@@ -1,26 +1,159 @@
 @import "tailwindcss";
 
+/* Sala de ensayo: tokens de DESIGN.md. Tema siempre oscuro (escena de uso: luz baja). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  --bg: oklch(0.17 0.012 60);
+  --surface: oklch(0.21 0.014 60);
+  --surface-2: oklch(0.25 0.016 60);
+  --line: oklch(0.32 0.014 60);
+  --fg: oklch(0.94 0.012 80);
+  --fg-muted: oklch(0.74 0.02 70);
+  --brass: oklch(0.8 0.12 78);
+  --brass-ink: oklch(0.22 0.03 70);
+  --st-aprender: oklch(0.72 0.05 240);
+  --st-estudio: oklch(0.8 0.12 78);
+  --st-listo: oklch(0.78 0.11 150);
+  --danger: oklch(0.7 0.16 25);
+  --radius: 6px;
+
+  --font-display-family: "Gloock", "Georgia", serif;
+  --font-body-family: "Instrument Sans Variable", system-ui, sans-serif;
+  --font-mono-family: "IBM Plex Mono", ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Solo los colores del sistema: la paleta por defecto de Tailwind queda fuera. */
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-brass: var(--brass);
+  --color-brass-ink: var(--brass-ink);
+  --color-st-aprender: var(--st-aprender);
+  --color-st-estudio: var(--st-estudio);
+  --color-st-listo: var(--st-listo);
+  --color-danger: var(--danger);
+
+  --radius-*: initial;
+  --radius-ui: var(--radius);
+  --radius-full: 9999px;
+
+  --font-*: initial;
+  --font-display: var(--font-display-family);
+  --font-sans: var(--font-body-family);
+  --font-mono: var(--font-mono-family);
+
+  /* Escala tipográfica de DESIGN.md */
+  --text-*: initial;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4;
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.45;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.5;
+  --text-title: 1.375rem;
+  --text-title--line-height: 1.25;
+  --text-display: 2rem;
+  --text-display--line-height: 1.1;
+  --text-hero: 2.75rem;
+  --text-hero--line-height: 1.05;
+
+  --ease-out-expo: var(--ease-out-expo);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body-family);
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--line) var(--bg);
+    scrollbar-width: thin;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    caret-color: var(--brass);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklch, var(--brass) 38%, transparent);
+    color: var(--fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  input,
+  textarea,
+  select {
+    caret-color: var(--brass);
+  }
+
+  ::placeholder {
+    color: var(--fg-muted);
+    opacity: 1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--line);
+    border: 2px solid var(--bg);
+    border-radius: var(--radius);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--fg-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Datos de medición (notas, minutos, fechas): cifras tabulares. */
+.font-mono,
+code,
+kbd,
+time {
+  font-variant-numeric: tabular-nums;
 }
