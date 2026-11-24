@@ -108,7 +108,9 @@ export const pieceSchema = z
     (piece) => {
       if (!piece.range_low || !piece.range_high) return true;
       const diff = compareNotes(piece.range_low, piece.range_high);
-      return diff !== null && diff <= 0;
+      // Si alguna nota no es válida, el error de formato ya lo emite noteField.
+      if (diff === null) return true;
+      return diff <= 0;
     },
     {
       path: ["range_high"],

@@ -126,6 +126,12 @@ describe("pieceSchema", () => {
     expect(errors.range_high).toMatch(/igual o más alta/);
   });
 
+  it("con la nota grave inválida y la aguda válida, marca solo la grave", () => {
+    const errors = errorsOf(pieceSchema.safeParse({ ...base, range_low: "Z9", range_high: "G4" }));
+    expect(errors.range_low).toMatch(/nota grave/);
+    expect(errors.range_high).toBeUndefined();
+  });
+
   it("acepta la misma nota como grave y aguda, también enarmónica", () => {
     expect(pieceSchema.safeParse({ ...base, range_low: "F#4", range_high: "Gb4" }).success).toBe(
       true,

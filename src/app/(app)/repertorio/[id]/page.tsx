@@ -104,7 +104,7 @@ export default async function PiezaPage({ params }: PiezaPageProps) {
               className="inline-flex h-11 items-center gap-2 rounded-ui border border-line px-4 text-body font-medium text-fg no-underline transition-colors hover:border-fg-muted hover:bg-surface"
             >
               <Pencil aria-hidden size={18} strokeWidth={1.75} />
-              Editar
+              Editar pieza
             </Link>
             <ConfirmDelete
               action={deletePiece.bind(null, piece.id)}
